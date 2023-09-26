@@ -3,7 +3,7 @@ package com.theksbd.firstspringproject;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-record Person(String name, int age) {
+record Person(String name, int age, Address address) {
 };
 
 record Address(String firstLine, String city) {
@@ -24,12 +24,21 @@ public class HelloWorldConfiguration {
 
     @Bean
     public Person person() {
-        var person = new Person("Hoang", 22);
-        return person;
+        return new Person("Do Thien Hoang", 23, new Address("Trung Chanh", "HCM"));
+    }
+
+    @Bean(name = "address2")
+    public Address address() {
+        return new Address("Trung My Tay", "TP.HCM");
     }
 
     @Bean
-    public Address address() {
-        return new Address("Trung My Tay", "TP.HCM");
+    public Person person2MethodCall() {
+        return new Person(name(), age(), address());
+    }
+
+    @Bean
+    public Person person3Parameters(String name, int age, Address address2) {
+        return new Person(name, age, address2);
     }
 }
